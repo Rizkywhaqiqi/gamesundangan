@@ -5,9 +5,10 @@ import bg from "@/assets/background.webp";
 
 export const Route = createFileRoute("/")({
   head: () => {
-    const ogImage = typeof window === "undefined"
-      ? `https://id-preview--2633b00c-80a4-4221-a636-9da0642257b2.lovable.app${bg}`
-      : `${window.location.origin}${bg}`;
+    const baseUrl = typeof window !== "undefined" 
+      ? window.location.origin 
+      : "https://gamesundangan.vercel.app"; // Replace with your production URL
+    const ogImage = `${baseUrl}${bg}`;
     const title = `Undangan Pernikahan — ${wedding.groom} & ${wedding.bride}`;
     const description = `Undangan digital interaktif ${wedding.groom} & ${wedding.bride}. ${wedding.hashtag}. Jelajahi taman, buka setiap checkpoint, dan kirim ucapan.`;
     return {
