@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { World } from "@/components/wedding/World";
+import { wedding } from "@/lib/wedding-config";
 import bg from "@/assets/background.webp";
 
 export const Route = createFileRoute("/")({
@@ -7,12 +8,14 @@ export const Route = createFileRoute("/")({
     const ogImage = typeof window === "undefined"
       ? `https://id-preview--2633b00c-80a4-4221-a636-9da0642257b2.lovable.app${bg}`
       : `${window.location.origin}${bg}`;
+    const title = `Undangan Pernikahan — ${wedding.groom} & ${wedding.bride}`;
+    const description = `Undangan digital interaktif ${wedding.groom} & ${wedding.bride}. ${wedding.hashtag}. Jelajahi taman, buka setiap checkpoint, dan kirim ucapan.`;
     return {
       meta: [
-        { title: "Undangan Pernikahan — Lionel & Gianni" },
-        { name: "description", content: "Undangan digital interaktif Lionel Messi & Gianni Infantino. Jelajahi taman, buka setiap checkpoint, dan kirim ucapan." },
-        { property: "og:title", content: "Undangan Pernikahan Lionel & Gianni" },
-        { property: "og:description", content: "Jelajahi undangan interaktif kami dan sampaikan doa terbaikmu." },
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
         { property: "og:type", content: "website" },
         { property: "og:image", content: ogImage },
         { name: "twitter:card", content: "summary_large_image" },
