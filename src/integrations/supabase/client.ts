@@ -43,14 +43,29 @@ function createSupabaseClient() {
     throw new Error(message);
   }
 
+  // Check if localStorage is available (some browsers like Instagram in-app browser restrict it)
+  let storage: Storage | undefined;
+  try {
+    if (typeof window !== 'undefined') {
+      // Test localStorage access
+      const testKey = '__supabase_test__';
+      localStorage.setItem(testKey, 'test');
+      localStorage.removeItem(testKey);
+      storage = localStorage;
+    }
+  } catch (error) {
+    console.warn('[Supabase] localStorage not available, falling back to session-only auth:', error);
+    storage = undefined;
+  }
+
   return createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
     global: {
       fetch: createSupabaseFetch(SUPABASE_PUBLISHABLE_KEY),
     },
     auth: {
-      storage: typeof window !== 'undefined' ? localStorage : undefined,
-      persistSession: true,
-      autoRefreshToken: true,
+      storage,
+      persistSession: storage !== undefined,
+      autoRefreshToken: storage !== undefined,
     }
   });
 }

@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { World } from "@/components/wedding/World";
 import { wedding } from "@/lib/wedding-config";
+import { InstagramWarning } from "@/components/wedding/InstagramWarning";
+import { useInstagramBrowser } from "@/hooks/use-instagram-browser";
 import bg from "@/assets/background.webp";
 
 export const Route = createFileRoute("/")({
@@ -28,5 +30,12 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  return <World />;
+  const { isInstagramBrowser } = useInstagramBrowser();
+
+  return (
+    <>
+      {isInstagramBrowser && <InstagramWarning />}
+      <World />
+    </>
+  );
 }

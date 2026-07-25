@@ -34,7 +34,7 @@ const wishSchema = z.object({
 });
 
 export const submitRsvp = createServerFn({ method: "POST" })
-  .inputValidator((raw: unknown) => rsvpSchema.parse(raw))
+  .validator((raw: unknown) => rsvpSchema.parse(raw))
   .handler(async ({ data }) => {
     const supabase = serverClient();
     const { error } = await supabase.from("rsvps").insert({
@@ -48,7 +48,7 @@ export const submitRsvp = createServerFn({ method: "POST" })
   });
 
 export const submitWish = createServerFn({ method: "POST" })
-  .inputValidator((raw: unknown) => wishSchema.parse(raw))
+  .validator((raw: unknown) => wishSchema.parse(raw))
   .handler(async ({ data }) => {
     const supabase = serverClient();
     const { error } = await supabase.from("wishes").insert({
