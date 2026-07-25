@@ -7,10 +7,10 @@ export const Route = createFileRoute("/")({
   head: () => {
     const baseUrl = typeof window !== "undefined" 
       ? window.location.origin 
-      : "https://gamesundangan.vercel.app"; // Replace with your production URL
+      : "https://otkhodylinzporto.vercel.app/"; // Replace with your production URL
     const ogImage = `${baseUrl}${bg}`;
     const title = `Undangan Pernikahan — ${wedding.groom} & ${wedding.bride}`;
-    const description = `Undangan digital interaktif ${wedding.groom} & ${wedding.bride}. ${wedding.hashtag}. Jelajahi taman, buka setiap checkpoint, dan kirim ucapan.`;
+    const description = `Undangan Pernikahan ${wedding.groom} & ${wedding.bride}. ${wedding.hashtag}. doa restunya`;
     return {
       meta: [
         { title },
