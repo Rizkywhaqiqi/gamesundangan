@@ -1,18 +1,33 @@
 export function Gallery() {
-  const swatches = ["#f5d0a9", "#c9d9c1", "#f0c6c9", "#d5c6e0", "#f2e6b8", "#c6dfea"];
+  const images = [
+    "https://i.ibb.co/1n2XwY0/gallery-1.jpg",
+    "https://i.ibb.co/0Q8Z9vL/gallery-2.jpg",
+    "https://i.ibb.co/6Y2q8k9/gallery-3.jpg",
+    "https://i.ibb.co/1n2XwY0/gallery-4.jpg",
+    "https://i.ibb.co/0Q8Z9vL/gallery-5.jpg",
+    "https://i.ibb.co/6Y2q8k9/gallery-6.jpg"
+  ];
+
   return (
     <div>
       <p className="mb-3 text-center text-xs text-muted-foreground italic">
         Momen-momen indah kami
       </p>
       <div className="grid grid-cols-3 gap-2">
-        {swatches.map((c, i) => (
+        {images.map((src, i) => (
           <div
             key={i}
-            className="aspect-square rounded-xl shadow-sm ring-1 ring-black/5 flex items-center justify-center font-serif text-2xl text-white/80"
-            style={{ background: `linear-gradient(135deg, ${c}, #ffffff)` }}
+            className="aspect-square overflow-hidden rounded-xl shadow-sm ring-1 ring-black/5"
           >
-            ♥
+            <img
+              src={src}
+              alt={`Gallery ${i + 1}`}
+              className="h-full w-full object-cover transition-transform hover:scale-110"
+              loading="lazy"
+              onError={(e) => {
+                (e.target as HTMLImageElement).style.display = 'none';
+              }}
+            />
           </div>
         ))}
       </div>
