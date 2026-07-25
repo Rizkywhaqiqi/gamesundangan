@@ -1,6 +1,9 @@
+/* stylelint-disable */
+/* csslint ignore:start */
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
+/* csslint ignore:end */
 
 @custom-variant dark (&:is(.dark *));
 

@@ -5,10 +5,10 @@ import { c as HeadContent, d as Outlet, f as lazyRouteComponent, g as useRouter,
 import { n as require_jsx_runtime } from "../_libs/radix-ui__react-context+react.mjs";
 import { t as QueryClient } from "../_libs/tanstack__query-core.mjs";
 import { r as QueryClientProvider } from "../_libs/tanstack__react-query.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/router-BgWyKcFy.js
+//#region node_modules/.nitro/vite/services/ssr/assets/router-DIVOaMzr.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
-var styles_default = "/assets/styles-pJ06yVek.css";
+var styles_default = "/assets/styles-DDKOToH4.css";
 function reportLovableError(error, context = {}) {
 	if (typeof window === "undefined") return;
 	window.__lovableEvents?.captureException?.(error, {
@@ -188,7 +188,7 @@ function RootComponent() {
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Outlet, {})
 	});
 }
-var $$splitComponentImporter = () => import("./routes-CPnMQKTH.mjs");
+var $$splitComponentImporter = () => import("./routes-C1rvnp2G.mjs");
 var rootRouteChildren = { IndexRoute: createFileRoute("/")({
 	head: () => {
 		const ogImage = `${typeof window !== "undefined" ? window.location.origin : "https://otkhodylinzporto.vercel.app/"}${background_default}`;

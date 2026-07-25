@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { World } from "@/components/wedding/World";
 import { wedding } from "@/lib/wedding-config";
-import { InstagramWarning } from "@/components/wedding/InstagramWarning";
-import { useInstagramBrowser } from "@/hooks/use-instagram-browser";
+import { LoadingScreen } from "@/components/wedding/LoadingScreen";
 import bg from "@/assets/background.webp";
+import { useState } from "react";
 
 export const Route = createFileRoute("/")({
   head: () => {
@@ -30,12 +30,15 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const { isInstagramBrowser } = useInstagramBrowser();
+  const [isLoading, setIsLoading] = useState(true);
 
-  return (
-    <>
-      {isInstagramBrowser && <InstagramWarning />}
-      <World />
-    </>
-  );
+  const handleLoadingComplete = () => {
+    setIsLoading(false);
+  };
+
+  if (isLoading) {
+    return <LoadingScreen onComplete={handleLoadingComplete} />;
+  }
+
+  return <World />;
 }

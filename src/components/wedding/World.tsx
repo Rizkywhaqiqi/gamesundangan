@@ -84,12 +84,21 @@ export function World() {
     return () => document.body.classList.remove("invitation-lock");
   }, []);
 
-  // Track viewport size
+  // Track viewport size with debounce for better performance
   useEffect(() => {
-    const measure = () => setViewport({ w: window.innerWidth, h: window.innerHeight });
+    let timeoutId: number;
+    const measure = () => {
+      clearTimeout(timeoutId);
+      timeoutId = window.setTimeout(() => {
+        setViewport({ w: window.innerWidth, h: window.innerHeight });
+      }, 100);
+    };
     measure();
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
+    window.addEventListener("resize", measure, { passive: true });
+    return () => {
+      window.removeEventListener("resize", measure);
+      clearTimeout(timeoutId);
+    };
   }, []);
 
   // World width = background aspect * viewport height (so bg fills world exactly)
@@ -145,13 +154,14 @@ export function World() {
       cameraRef.current = nextCamera;
 
       // Direct DOM manipulation for smooth 60fps (bypass React)
-      if (worldRef.current) {
+      // Only update DOM if values actually changed to reduce layout thrashing
+      if (worldRef.current && worldRef.current.style.transform !== `translate3d(${-nextCamera}px,0,0)`) {
         worldRef.current.style.transform = `translate3d(${-nextCamera}px,0,0)`;
       }
-      if (characterRef.current) {
+      if (characterRef.current && characterRef.current.style.left !== `${nextPlayer - nextCamera}px`) {
         characterRef.current.style.left = `${nextPlayer - nextCamera}px`;
       }
-      if (promptRef.current && nearestRef.current) {
+      if (promptRef.current && nearestRef.current && promptRef.current.style.left !== `${nextPlayer - nextCamera}px`) {
         promptRef.current.style.left = `${nextPlayer - nextCamera}px`;
       }
 
@@ -185,24 +195,24 @@ export function World() {
     const el = bgMusicRef.current;
     if (!el) return;
     el.volume = bgMusicVolume;
-    if (bgMusicEnabled && !openId) {
+    if (bgMusicEnabled) {
       el.play().catch(() => {});
     } else {
       el.pause();
     }
-  }, [bgMusicEnabled, bgMusicVolume, openId]);
+  }, [bgMusicEnabled, bgMusicVolume]);
 
   // Ambient sounds handling
   useEffect(() => {
     const el = ambientRef.current;
     if (!el) return;
     el.volume = ambientVolume;
-    if (ambientEnabled && !openId) {
+    if (ambientEnabled) {
       el.play().catch(() => {});
     } else {
       el.pause();
     }
-  }, [ambientEnabled, ambientVolume, openId]);
+  }, [ambientEnabled, ambientVolume]);
 
   // Auto-start audio on first user interaction
   useEffect(() => {
@@ -211,12 +221,14 @@ export function World() {
     const startAudio = () => {
       setBgMusicEnabled(true);
       setAmbientEnabled(true);
+      setStarted(true);
       window.removeEventListener("click", startAudio);
       window.removeEventListener("keydown", startAudio);
     };
     
-    window.addEventListener("click", startAudio);
-    window.addEventListener("keydown", startAudio);
+    // Use once: true to auto-remove listeners after first interaction
+    window.addEventListener("click", startAudio, { once: true });
+    window.addEventListener("keydown", startAudio, { once: true });
     
     return () => {
       window.removeEventListener("click", startAudio);
