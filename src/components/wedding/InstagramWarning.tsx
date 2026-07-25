@@ -30,24 +30,12 @@ export function InstagramWarning() {
             Untuk pengalaman terbaik, buka undangan ini di browser SAFARI, CHROME atau browser bawaan lainnya. Instagram in-app browser memiliki keterbatasan yang dapat mengganggu pengalaman Anda.
           </p>
         </div>
-
-        <div className="space-y-3">
-          <button
-            onClick={handleOpenInBrowser}
-            className="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-pink-600 hover:to-purple-700 transition-all duration-200 flex items-center justify-center gap-2 shadow-lg"
-          >
-            <ExternalLink className="w-5 h-5" />
-            Buka di Browser
-          </button>
-          
-          <p className="text-sm text-gray-500 mt-4">
-            Tap tombol di atas, lalu pilih <strong>Chrome</strong>, <strong>Safari</strong>, atau browser lain
+       <p className="text-gray-600">
+            Klik 3 titik di kanan atas (⋮) dan pilih "Buka di Browser" atau "Open in Browser" untuk melanjutkan.
           </p>
-        </div>
-
         <div className="mt-6 pt-6 border-t border-gray-200">
           <p className="text-xs text-gray-400">
-            Instagram in-app browser memiliki keterbatasan yang dapat mengganggu pengalaman Anda
+            by rwhqq_
           </p>
         </div>
       </div>
