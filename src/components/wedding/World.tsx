@@ -4,6 +4,9 @@ import idle from "@/assets/idle.gif";
 import leftGif from "@/assets/left.gif";
 import rightGif from "@/assets/right.gif";
 import walkMp3 from "@/assets/walk.mp3";
+import bgMusic from "@/assets/background-music.mp3";
+import ambient from "@/assets/ambient.mp3";
+import { Volume2, Music, Wind } from "lucide-react";
 import { checkpoints, type Checkpoint, type CheckpointId } from "@/lib/wedding-config";
 import { CheckpointModal } from "./CheckpointModal";
 import { Controls } from "./Controls";
@@ -21,7 +24,7 @@ const BG_HEIGHT = 813;
 const BG_ASPECT = BG_WIDTH / BG_HEIGHT; // ~2.361
 const CHARACTER_HEIGHT = 120; // px
 const NEAR_THRESHOLD = 90; // px around a checkpoint to allow "open"
-const WALK_SPEED = 3; // px per frame
+const WALK_SPEED = 2; // px per frame
 const CHECKPOINT_PADDING = 100; // Ruang ekstra untuk interaksi checkpoint
 
 
@@ -54,7 +57,14 @@ export function World() {
   const [visited, setVisited] = useState<Set<CheckpointId>>(new Set());
   const [guestName, setGuestName] = useState("");
   const [started, setStarted] = useState(false);
+  const [bgMusicEnabled, setBgMusicEnabled] = useState(false);
+  const [ambientEnabled, setAmbientEnabled] = useState(false);
+  const [bgMusicVolume, setBgMusicVolume] = useState(0.3);
+  const [ambientVolume, setAmbientVolume] = useState(0.2);
+  const [showAudioPanel, setShowAudioPanel] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const bgMusicRef = useRef<HTMLAudioElement | null>(null);
+  const ambientRef = useRef<HTMLAudioElement | null>(null);
   
   // Direct DOM refs for smooth animation (bypass React re-renders)
   const worldRef = useRef<HTMLDivElement>(null);
@@ -170,6 +180,50 @@ export function World() {
     }
   }, [moving]);
 
+  // Background music handling
+  useEffect(() => {
+    const el = bgMusicRef.current;
+    if (!el) return;
+    el.volume = bgMusicVolume;
+    if (bgMusicEnabled && !openId) {
+      el.play().catch(() => {});
+    } else {
+      el.pause();
+    }
+  }, [bgMusicEnabled, bgMusicVolume, openId]);
+
+  // Ambient sounds handling
+  useEffect(() => {
+    const el = ambientRef.current;
+    if (!el) return;
+    el.volume = ambientVolume;
+    if (ambientEnabled && !openId) {
+      el.play().catch(() => {});
+    } else {
+      el.pause();
+    }
+  }, [ambientEnabled, ambientVolume, openId]);
+
+  // Auto-start audio on first user interaction
+  useEffect(() => {
+    if (started) return;
+    
+    const startAudio = () => {
+      setBgMusicEnabled(true);
+      setAmbientEnabled(true);
+      window.removeEventListener("click", startAudio);
+      window.removeEventListener("keydown", startAudio);
+    };
+    
+    window.addEventListener("click", startAudio);
+    window.addEventListener("keydown", startAudio);
+    
+    return () => {
+      window.removeEventListener("click", startAudio);
+      window.removeEventListener("keydown", startAudio);
+    };
+  }, [started]);
+
   // Auto-open opening on first mount
   useEffect(() => {
     const t = setTimeout(() => {
@@ -255,7 +309,7 @@ export function World() {
         </div>
         <svg width="26" height="34" viewBox="0 0 24 32" className="drop-shadow-md">
           <path
-            d="M12 0C5.4 0 0 5.4 0 12c0 8.4 12 20 12 20s12-11.6 12-20C24 5.4 18.6 0 12 0z"
+            d="M12 0C5.4 0 0 5.4 0 12c0 8.4 12 20 12 20s12-11.6 12-20C24 5.4 0 12 0z"
             fill={cp.color}
           />
           <circle cx="12" cy="11" r="4.5" fill="#fff" />
@@ -289,7 +343,6 @@ export function World() {
           className="absolute inset-0 h-full w-full object-cover object-bottom pointer-events-none"
           draggable={false}
         />
-
 
         {/* Checkpoint pins - memoized to prevent unnecessary re-renders */}
         {checkpointPins}
@@ -347,6 +400,101 @@ export function World() {
         </button>
       )}
 
+      {/* Audio Controls */}
+      <div className="absolute top-20 right-3 z-50">
+        {/* Audio Toggle Button */}
+        <button
+          onClick={() => setShowAudioPanel(!showAudioPanel)}
+          className={`rounded-full p-2.5 shadow-lg backdrop-blur-sm transition-all ${
+            bgMusicEnabled || ambientEnabled
+              ? "bg-indigo-500/90 text-white hover:bg-indigo-600/90" 
+              : "bg-white/80 text-gray-600 hover:bg-white"
+          }`}
+          title="Audio Controls"
+        >
+          <Volume2 size={20} />
+        </button>
+
+        {/* Audio Panel */}
+        {showAudioPanel && (
+          <div className="absolute right-12 top-0 bg-white/95 backdrop-blur-sm rounded-lg p-4 shadow-lg w-64">
+            <h3 className="text-sm font-bold text-gray-800 mb-3">Audio Controls</h3>
+            
+            {/* Background Music Control */}
+            <div className="mb-3">
+              <div className="flex items-center justify-between mb-2">
+                <label className="text-xs font-semibold text-gray-700 flex items-center gap-2">
+                  <Music size={14} />
+                  Musik Latar
+                </label>
+                <button
+                  onClick={() => setBgMusicEnabled(!bgMusicEnabled)}
+                  className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
+                    bgMusicEnabled ? "bg-purple-500" : "bg-gray-300"
+                  }`}
+                >
+                  <span className={`inline-block h-3 w-3 transform rounded-full bg-white transition-transform ${
+                    bgMusicEnabled ? "translate-x-5" : "translate-x-1"
+                  }`} />
+                </button>
+              </div>
+              {bgMusicEnabled && (
+                <div>
+                  <label className="text-xs text-gray-600 block mb-1">
+                    Volume: {Math.round(bgMusicVolume * 100)}%
+                  </label>
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.1"
+                    value={bgMusicVolume}
+                    onChange={(e) => setBgMusicVolume(parseFloat(e.target.value))}
+                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-purple-500"
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Ambient Sounds Control */}
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <label className="text-xs font-semibold text-gray-700 flex items-center gap-2">
+                  <Wind size={14} />
+                  Suara Alam
+                </label>
+                <button
+                  onClick={() => setAmbientEnabled(!ambientEnabled)}
+                  className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
+                    ambientEnabled ? "bg-teal-500" : "bg-gray-300"
+                  }`}
+                >
+                  <span className={`inline-block h-3 w-3 transform rounded-full bg-white transition-transform ${
+                    ambientEnabled ? "translate-x-5" : "translate-x-1"
+                  }`} />
+                </button>
+              </div>
+              {ambientEnabled && (
+                <div>
+                  <label className="text-xs text-gray-600 block mb-1">
+                    Volume: {Math.round(ambientVolume * 100)}%
+                  </label>
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.1"
+                    value={ambientVolume}
+                    onChange={(e) => setAmbientVolume(parseFloat(e.target.value))}
+                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-teal-500"
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+
       {/* Controls */}
       <Controls
         onHold={start}
@@ -358,6 +506,24 @@ export function World() {
 
       {/* SFX */}
       <audio ref={audioRef} src={walkMp3} loop preload="auto" />
+      
+      {/* Background Music */}
+      <audio 
+        ref={bgMusicRef} 
+        src={bgMusic} 
+        loop 
+        preload="auto"
+        playsInline
+      />
+      
+      {/* Ambient Sounds */}
+      <audio 
+        ref={ambientRef} 
+        src={ambient} 
+        loop 
+        preload="auto"
+        playsInline
+      />
 
       {/* Modal */}
       <CheckpointModal
