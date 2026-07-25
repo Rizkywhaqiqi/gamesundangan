@@ -14,7 +14,7 @@ import { t as twMerge } from "../_libs/tailwind-merge.mjs";
 import { t as VisuallyHidden } from "../_libs/@radix-ui/react-visually-hidden+[...].mjs";
 import { t as Root } from "../_libs/radix-ui__react-label.mjs";
 import { t as toast } from "../_libs/sonner.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/routes-C1rvnp2G.js
+//#region node_modules/.nitro/vite/services/ssr/assets/routes-BP239PJG.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 function useServerFn(serverFn) {
@@ -866,7 +866,7 @@ function World() {
 				className: "drop-shadow-md",
 				children: [
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
-						d: "M12 0C5.4 0 0 5.4 0 12c0 8.4 12 20 12 20s12-11.6 12-20C24 5.4 0 12 0z",
+						d: "M12 0 C5.4 0 0 5.4 0 12 c0 8.4 12 20 12 20 s12-11.6 12-20 C24 5.4 0 12 0z",
 						fill: cp.color
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("circle", {
@@ -876,7 +876,7 @@ function World() {
 						fill: "#fff"
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
-						d: "M12 13.5c-1-1-3-2-3-3.6 0-1 .8-1.9 1.9-1.9.6 0 1 .3 1.1.7.1-.4.5-.7 1.1-.7 1 0 1.9.9 1.9 1.9 0 1.6-2 2.6-3 3.6z",
+						d: "M12 13.5 c-1-1-3-2-3-3.6 0-1 .8-1.9 1.9-1.9 .6 0 1 .3 1.1 .7 .1-.4 .5-.7 1.1-.7 1 0 1.9 .9 1.9 1.9 0 1.6-2 2.6-3 3.6z",
 						fill: cp.color
 					})
 				]
@@ -1063,37 +1063,37 @@ function LoadingScreen({ onComplete }) {
 		const assets = [
 			{
 				name: "Taman",
-				src: "/background.webp",
+				src: background_default,
 				type: "image"
 			},
 			{
 				name: "Musik Latar",
-				src: "/background-music.mp3",
+				src: background_music_default,
 				type: "audio"
 			},
 			{
 				name: "Suara Alam",
-				src: "/ambient.mp3",
+				src: ambient_default,
 				type: "audio"
 			},
 			{
 				name: "Efek Jalan",
-				src: "/walk.mp3",
+				src: walk_default,
 				type: "audio"
 			},
 			{
 				name: "Animasi Idle",
-				src: "/idle.gif",
+				src: idle_default,
 				type: "image"
 			},
 			{
 				name: "Animasi Kiri",
-				src: "/left.gif",
+				src: left_default,
 				type: "image"
 			},
 			{
 				name: "Animasi Kanan",
-				src: "/right.gif",
+				src: right_default,
 				type: "image"
 			}
 		];

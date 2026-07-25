@@ -1,4 +1,11 @@
 import { useState, useEffect } from "react";
+import bg from "@/assets/background.webp";
+import bgMusic from "@/assets/background-music.mp3";
+import ambient from "@/assets/ambient.mp3";
+import walkMp3 from "@/assets/walk.mp3";
+import idle from "@/assets/idle.gif";
+import leftGif from "@/assets/left.gif";
+import rightGif from "@/assets/right.gif";
 
 interface LoadingScreenProps {
   onComplete: () => void;
@@ -9,13 +16,13 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
 
   useEffect(() => {
     const assets = [
-      { name: "Taman", src: "/background.webp", type: "image" as const },
-      { name: "Musik Latar", src: "/background-music.mp3", type: "audio" as const },
-      { name: "Suara Alam", src: "/ambient.mp3", type: "audio" as const },
-      { name: "Efek Jalan", src: "/walk.mp3", type: "audio" as const },
-      { name: "Animasi Idle", src: "/idle.gif", type: "image" as const },
-      { name: "Animasi Kiri", src: "/left.gif", type: "image" as const },
-      { name: "Animasi Kanan", src: "/right.gif", type: "image" as const },
+      { name: "Taman", src: bg, type: "image" as const },
+      { name: "Musik Latar", src: bgMusic, type: "audio" as const },
+      { name: "Suara Alam", src: ambient, type: "audio" as const },
+      { name: "Efek Jalan", src: walkMp3, type: "audio" as const },
+      { name: "Animasi Idle", src: idle, type: "image" as const },
+      { name: "Animasi Kiri", src: leftGif, type: "image" as const },
+      { name: "Animasi Kanan", src: rightGif, type: "image" as const },
     ];
 
     let loaded = 0;
