@@ -1,7 +1,7 @@
 export const wedding = {
-  groom: "Lionel Messi",
-  bride: "Gianni Infantino",
-  hashtag: "#LionelGianniForever",
+  groom: "otkhodylinz",
+  bride: "ithkadylinz",
+  hashtag: "#halamadrid",
   akad: {
     label: "Akad Nikah",
     date: "Sabtu, 12 Oktober 2026",
@@ -49,7 +49,7 @@ export const checkpoints: Checkpoint[] = [
     subtitle: "Halaman Pembuka", 
     xPercent: 0.10, 
     color: "#ec4899",
-    image: "https://pbs.twimg.com/media/HJ1IdwZWQAAFjAN.jpg" // Replace with your hero image
+    image: "https://i.pinimg.com/736x/7f/c2/e9/7fc2e9c1acef7a59cbc9ef60219fb64b.jpg" // Replace with your hero image
   },
   { 
     id: "couple",  

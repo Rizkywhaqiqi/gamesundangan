@@ -1,12 +1,8 @@
+import { checkpoints } from "@/lib/wedding-config";
+
 export function Gallery() {
-  const images = [
-    "https://i.ibb.co/1n2XwY0/gallery-1.jpg",
-    "https://i.ibb.co/0Q8Z9vL/gallery-2.jpg",
-    "https://i.ibb.co/6Y2q8k9/gallery-3.jpg",
-    "https://i.ibb.co/1n2XwY0/gallery-4.jpg",
-    "https://i.ibb.co/0Q8Z9vL/gallery-5.jpg",
-    "https://i.ibb.co/6Y2q8k9/gallery-6.jpg"
-  ];
+  const galleryCheckpoint = checkpoints.find(cp => cp.id === "gallery");
+  const images = galleryCheckpoint?.images || [];
 
   return (
     <div>

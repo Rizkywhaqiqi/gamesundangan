@@ -1,20 +1,25 @@
 import { Button } from "@/components/ui/button";
-import { wedding } from "@/lib/wedding-config";
+import { wedding, checkpoints } from "@/lib/wedding-config";
 import { Heart } from "lucide-react";
 
 export function Opening({ guestName, onClose }: { guestName: string; onClose: () => void }) {
+  const openingCheckpoint = checkpoints.find(cp => cp.id === "opening");
+  const heroImage = openingCheckpoint?.image;
+
   return (
     <div className="text-center">
-      <div className="mb-4 overflow-hidden rounded-2xl">
-        <img
-          src="https://i.ibb.co/6Y2q8k9/wedding-hero.jpg"
-          alt="Wedding Hero"
-          className="h-48 w-full object-cover"
-          onError={(e) => {
-            (e.target as HTMLImageElement).style.display = 'none';
-          }}
-        />
-      </div>
+      {heroImage && (
+        <div className="mb-4 overflow-hidden rounded-2xl">
+          <img
+            src={heroImage}
+            alt="Wedding Hero"
+            className="h-48 w-full object-cover"
+            onError={(e) => {
+              (e.target as HTMLImageElement).style.display = 'none';
+            }}
+          />
+        </div>
+      )}
       <Heart className="mx-auto h-6 w-6 text-primary" />
       <p className="mt-3 text-sm text-muted-foreground">The Wedding of</p>
       <h3 className="mt-1 font-serif text-3xl leading-tight text-foreground">

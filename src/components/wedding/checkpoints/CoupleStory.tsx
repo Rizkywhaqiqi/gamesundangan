@@ -1,20 +1,25 @@
-import { wedding } from "@/lib/wedding-config";
+import { wedding, checkpoints } from "@/lib/wedding-config";
 
 export function CoupleStory() {
+  const coupleCheckpoint = checkpoints.find(cp => cp.id === "couple");
+  const images = coupleCheckpoint?.images || [];
+
   return (
     <div className="space-y-4 text-sm text-foreground/90">
       <div className="grid grid-cols-2 gap-3">
         {[wedding.groom, wedding.bride].map((name, i) => (
           <div key={name} className="rounded-2xl bg-secondary/60 p-3 text-center">
             <div className="mx-auto h-20 w-20 overflow-hidden rounded-full">
-              <img
-                src={i === 0 ? "https://i.ibb.co/0Q8Z9vL/groom.jpg" : "https://i.ibb.co/1n2XwY0/bride.jpg"}
-                alt={name}
-                className="h-full w-full object-cover"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = 'none';
-                }}
-              />
+              {images[i] && (
+                <img
+                  src={images[i]}
+                  alt={name}
+                  className="h-full w-full object-cover"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).style.display = 'none';
+                  }}
+                />
+              )}
             </div>
             <p className="mt-2 font-serif text-base font-semibold">{name}</p>
             <p className="text-[11px] italic text-muted-foreground">
