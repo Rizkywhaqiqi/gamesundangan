@@ -47,16 +47,16 @@ export const checkpoints: Checkpoint[] = [
     index: 1, 
     title: "Opening", 
     subtitle: "Halaman Pembuka", 
-    xPercent: 0.25, 
+    xPercent: 0.10, 
     color: "#ec4899",
-    image: "https://i.ibb.co/6Y2q8k9/wedding-hero.jpg" // Replace with your hero image
+    image: "https://pbs.twimg.com/media/HJ1IdwZWQAAFjAN.jpg" // Replace with your hero image
   },
   { 
     id: "couple",  
     index: 2, 
     title: "Couple Story", 
     subtitle: "Kisah Kami", 
-    xPercent: 0.35, 
+    xPercent: 0.23, 
     color: "#f97316",
     images: [
       "https://i.ibb.co/0Q8Z9vL/groom.jpg", // Replace with groom photo
@@ -68,7 +68,7 @@ export const checkpoints: Checkpoint[] = [
     index: 3, 
     title: "Event Details", 
     subtitle: "Detail Acara", 
-    xPercent: 0.45, 
+    xPercent: 0.37, 
     color: "#22c55e" 
   },
   { 
@@ -76,7 +76,7 @@ export const checkpoints: Checkpoint[] = [
     index: 4, 
     title: "Gallery", 
     subtitle: "Galeri Foto", 
-    xPercent: 0.55, 
+    xPercent: 0.54, 
     color: "#3b82f6",
     images: [
       "https://i.ibb.co/1n2XwY0/gallery-1.jpg", // Replace with gallery photos
@@ -88,6 +88,6 @@ export const checkpoints: Checkpoint[] = [
     ]
   },
   { id: "rsvp",    index: 5, title: "RSVP",            subtitle: "Konfirmasi Kehadiran",xPercent: 0.67, color: "#a855f7" },
-  { id: "wishes",  index: 6, title: "Wedding Wishes",  subtitle: "Ucapan & Doa",        xPercent: 0.77, color: "#eab308" },
-  { id: "thanks",  index: 7, title: "Thank You",       subtitle: "Penutup",             xPercent: 0.85, color: "#ef4444" },
+  { id: "wishes",  index: 6, title: "Wedding Wishes",  subtitle: "Ucapan & Doa",        xPercent: 0.82, color: "#eab308" },
+  { id: "thanks",  index: 7, title: "Thank You",       subtitle: "Penutup",             xPercent: 0.94, color: "#ef4444" },
 ];
